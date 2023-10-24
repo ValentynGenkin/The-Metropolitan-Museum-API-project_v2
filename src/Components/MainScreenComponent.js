@@ -6,6 +6,7 @@ function MainScreenComponent() {
   return (
     <>
       <Carousel />
+
       <MainScreenWelcomeImg />
 
       <MainScreenCards />
