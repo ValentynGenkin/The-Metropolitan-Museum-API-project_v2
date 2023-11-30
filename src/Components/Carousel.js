@@ -6,8 +6,8 @@ import { Container } from 'react-bootstrap';
 const responsive = {
   0: { items: 1 },
   568: { items: 1 },
-  800: { items: 2 },
-  1024: { items: 3, itemsFit: 'contain' },
+  800: { items: 2.5 },
+  1024: { items: 3.5, itemsFit: 'contain' },
 };
 
 const items = [
@@ -16,13 +16,11 @@ const items = [
     data-value="1"
     style={{
       overflow: 'hidden',
+      height: '25rem',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      height: '25rem',
-      width: '100%',
-      // paddingRight: '5px',
-      flexDirection: 'column',
+      paddingLeft: '5px',
     }}
   >
     <img
@@ -31,6 +29,7 @@ const items = [
       style={{
         width: '100%',
         height: 'auto',
+        margin: '0 auto',
       }}
     />
     <span
@@ -66,6 +65,17 @@ const items = [
         margin: '0 auto',
       }}
     />
+    <span
+      style={{
+        position: 'absolute',
+        bottom: '10px',
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: '1.25rem',
+      }}
+    >
+      Arms and armorer
+    </span>
   </div>,
   <div
     className="item"
@@ -88,6 +98,17 @@ const items = [
         margin: '0 auto',
       }}
     />
+    <span
+      style={{
+        position: 'absolute',
+        bottom: '10px',
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: '1.25rem',
+      }}
+    >
+      Arms and armorer
+    </span>
   </div>,
   <div
     className="item"
@@ -110,6 +131,17 @@ const items = [
         margin: '0 auto',
       }}
     />
+    <span
+      style={{
+        position: 'absolute',
+        bottom: '10px',
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: '1.25rem',
+      }}
+    >
+      Arms and armorer
+    </span>
   </div>,
   <div
     className="item"
@@ -132,20 +164,29 @@ const items = [
         margin: '0 auto',
       }}
     />
+    <span
+      style={{
+        position: 'absolute',
+        bottom: '10px',
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: '1.25rem',
+      }}
+    >
+      Arms and armorer
+    </span>
   </div>,
 ];
 
 function Carousel() {
   return (
-    <Container style={{ padding: '0', margin: '10px auto' }}>
-      <AliceCarousel
-        items={items}
-        responsive={responsive}
-        controlsStrategy="alternate"
-        disableDotsControls
-        disableSlideInfo="false"
-      />
-    </Container>
+    <AliceCarousel
+      items={items}
+      responsive={responsive}
+      controlsStrategy="alternate"
+      disableDotsControls
+      disableSlideInfo="false"
+    />
   );
 }
 

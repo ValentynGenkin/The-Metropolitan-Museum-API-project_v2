@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import NavigationBar from './NavigationBar';
 import ScrollToTop from 'react-scroll-to-top';
-import MainScreenWelcomeImg from './MainScreenWelcomeImg';
+import Footer from './Footer';
 
 function Layout() {
   return (
@@ -15,6 +15,8 @@ function Layout() {
         smooth
         component={<img src="" alt="" />}
       />
+
+      <Footer />
     </>
   );
 }
