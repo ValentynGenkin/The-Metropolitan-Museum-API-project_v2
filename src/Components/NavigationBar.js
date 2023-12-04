@@ -41,7 +41,7 @@ function NavigationBar() {
                 response.departments.map((department) => (
                   <NavDropdown.Item
                     as={Link}
-                    to={`/${department.displayName}`}
+                    to={`categories/${department.displayName}/${department.departmentId}`}
                     key={department.departmentId}
                   >
                     {department.displayName}

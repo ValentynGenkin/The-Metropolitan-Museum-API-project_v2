@@ -5,9 +5,9 @@ export const bulkFetch = async (IDs, setFetchedData) => {
         `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`,
       );
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
+      // if (!response.ok) {
+      //   throw new Error(`HTTP error! Status: ${response.status}`);
+      // }
 
       return response.json();
     });
