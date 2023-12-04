@@ -21,7 +21,7 @@ function DepartmentsList() {
       ) : response ? (
         response.departments.map((department) => (
           <div key={department.departmentId} className="category-item">
-            <Link to={`${department.displayName}`}>
+            <Link to={`${department.displayName}/${department.departmentId}`}>
               {department.displayName}
             </Link>
           </div>
