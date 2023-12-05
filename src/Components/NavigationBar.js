@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 function NavigationBar() {
+  const [searchInput, setSearchInput] = useState(null);
   const [response, setResponse] = useState(null);
   const url = `https://collectionapi.metmuseum.org/public/collection/v1/departments`;
 
@@ -17,6 +18,11 @@ function NavigationBar() {
   useEffect(() => {
     data && setResponse(data);
   }, [data]);
+
+  const handleInputChange = (e) => {
+    const inputData = e.target.value;
+    setSearchInput(inputData);
+  };
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
@@ -56,8 +62,15 @@ function NavigationBar() {
               placeholder="Search"
               className="me-2"
               aria-label="Search"
+              onChange={handleInputChange}
             />
-            <Button variant="outline-success">Search</Button>
+            <Button
+              as={Link}
+              to={`categories/search/${searchInput}`}
+              variant="outline-success"
+            >
+              Search
+            </Button>
           </Form>
         </Navbar.Collapse>
       </Container>

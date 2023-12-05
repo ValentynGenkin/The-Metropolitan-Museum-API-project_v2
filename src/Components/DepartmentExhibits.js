@@ -16,7 +16,11 @@ function DepartmentExhibits() {
   const [bulkLoading, setBulkLoading] = useState(true);
   const { id, category } = useParams();
 
-  const url = `https://collectionapi.metmuseum.org/public/collection/v1/search?departmentId=${id}&q=cat`;
+  const url =
+    category === 'search'
+      ? `https://collectionapi.metmuseum.org/public/collection/v1/search?q=${id}`
+      : `https://collectionapi.metmuseum.org/public/collection/v1/search?departmentId=${id}&q=cat`;
+
   const [data, isLoading, error] = useFetch(url);
 
   useEffect(() => {
@@ -30,7 +34,7 @@ function DepartmentExhibits() {
       const slicedExhibits = response.slice(chunkedID, chunkedID + chunkSize);
       setExhibitId(slicedExhibits);
     }
-  }, [chunkedID, response, chunkSelect]);
+  }, [chunkedID, response, chunkSelect, chunkSize]);
 
   useEffect(() => {
     exhibitId && bulkFetch(exhibitId, setFetchedData, setBulkLoading);
@@ -51,7 +55,10 @@ function DepartmentExhibits() {
   return (
     <>
       <Container className="items-per-page">
-        <h4>{category}</h4>
+        <h4>
+          {category === 'search' ? `Search results for: ${id}` : category}
+        </h4>
+
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <span>{'Items per page: '}</span>
           <div>
@@ -75,6 +82,23 @@ function DepartmentExhibits() {
             {response && `Total exhibits: ${response.length}`}{' '}
           </span>
         </div>
+      </Container>
+      <Container>
+        <Form className="check-boxes">
+          <p>Filters:</p>
+          <Form.Check
+            className="filter-switch"
+            type="switch"
+            id="custom-switch-1"
+            label="Artworks on Display"
+          />
+          <Form.Check
+            className="filter-switch"
+            type="switch"
+            label="Highlights"
+            id="custom-switch-2"
+          />
+        </Form>
       </Container>
       <Container className="page-nav-btn-container">
         <Button
