@@ -24,6 +24,7 @@
 .page-nav-btn-container {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 .page-nav-btn {
   width: 150px;

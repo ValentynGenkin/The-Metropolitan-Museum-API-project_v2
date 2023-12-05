@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import useFetch from '../Hooks/useFetch';
 import { useParams } from 'react-router-dom';
 import { bulkFetch } from '../Functions/bulkFetch';
-import { Button, Card, Container, Form } from 'react-bootstrap';
+import { Button, Card, Container, Form, Spinner } from 'react-bootstrap';
 
 import '../CSS/DepartmentExhibits.css';
 
@@ -12,11 +12,12 @@ function DepartmentExhibits() {
   const [chunkedID, setChunkedId] = useState(0);
   const [exhibitId, setExhibitId] = useState([]);
   const [chunkSelect, setChunkSelect] = useState(20);
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const [bulkLoading, setBulkLoading] = useState(true);
   const { id, category } = useParams();
 
   const url = `https://collectionapi.metmuseum.org/public/collection/v1/search?departmentId=${id}&q=cat`;
-  const [data, error] = useFetch(url);
+  const [data, isLoading, error] = useFetch(url);
 
   useEffect(() => {
     data && setResponse(data.objectIDs);
@@ -32,7 +33,7 @@ function DepartmentExhibits() {
   }, [chunkedID, response, chunkSelect]);
 
   useEffect(() => {
-    exhibitId && bulkFetch(exhibitId, setFetchedData);
+    exhibitId && bulkFetch(exhibitId, setFetchedData, setBulkLoading);
   }, [exhibitId]);
 
   const upOffset = () => {
@@ -81,15 +82,23 @@ function DepartmentExhibits() {
           variant="outline-dark"
           onClick={() => {
             downOffset();
+            if (currentPage > 1) setCurrentPage(currentPage - 1);
           }}
         >
           Previous page
         </Button>
+        {response && response.length > 1 ? (
+          <div>
+            {`${currentPage} / ${Math.ceil(response.length / chunkSize)}`}
+          </div>
+        ) : null}
         <Button
           className="page-nav-btn"
           variant="outline-dark"
           onClick={() => {
             upOffset();
+            if (response && currentPage < response.length / chunkSize)
+              setCurrentPage(currentPage + 1);
           }}
         >
           Next page
@@ -99,33 +108,37 @@ function DepartmentExhibits() {
         Please note that due to copyright restrictions, not all images may be
         displayed.
       </p>
-      <Container className="department-container">
-        {fetchedData &&
-          fetchedData.map((item) => (
-            <Card key={item.objectID} className="department-container-card">
-              <Card.Img
-                variant="top"
-                src={
-                  item.primaryImageSmall
-                    ? item.primaryImageSmall
-                    : '/assets/noPhoto.png'
-                }
-                className="department-container-img"
-              />
-              <Card.Body className="department-container-card-body">
-                <Card.Title className="department-container-title">
-                  {item.title}
-                </Card.Title>
-                <Card.Text className="department-container-text">
-                  {item.artistDisplayName}
-                  <br />
-                  {item.objectDate}
-                </Card.Text>
-                <Button variant="outline-secondary">More information</Button>
-              </Card.Body>
-            </Card>
-          ))}
-      </Container>
+      {isLoading || bulkLoading ? (
+        <Spinner variant="primary" />
+      ) : (
+        <Container className="department-container">
+          {fetchedData &&
+            fetchedData.map((item) => (
+              <Card key={item.objectID} className="department-container-card">
+                <Card.Img
+                  variant="top"
+                  src={
+                    item.primaryImageSmall
+                      ? item.primaryImageSmall
+                      : '/assets/noPhoto.png'
+                  }
+                  className="department-container-img"
+                />
+                <Card.Body className="department-container-card-body">
+                  <Card.Title className="department-container-title">
+                    {item.title}
+                  </Card.Title>
+                  <Card.Text className="department-container-text">
+                    {item.artistDisplayName}
+                    <br />
+                    {item.objectDate}
+                  </Card.Text>
+                  <Button variant="outline-secondary">More information</Button>
+                </Card.Body>
+              </Card>
+            ))}
+        </Container>
+      )}
     </>
   );
 }

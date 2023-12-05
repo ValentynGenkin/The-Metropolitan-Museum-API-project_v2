@@ -1,13 +1,10 @@
-export const bulkFetch = async (IDs, setFetchedData) => {
+export const bulkFetch = async (IDs, setFetchedData, setBulkLoading) => {
+  setBulkLoading(true);
   try {
     const promises = IDs.map(async (id) => {
       const response = await fetch(
         `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`,
       );
-
-      // if (!response.ok) {
-      //   throw new Error(`HTTP error! Status: ${response.status}`);
-      // }
 
       return response.json();
     });
@@ -15,6 +12,7 @@ export const bulkFetch = async (IDs, setFetchedData) => {
     const responseDataArray = await Promise.all(promises);
 
     setFetchedData(responseDataArray);
+    setBulkLoading(false);
   } catch (error) {
     console.error(error);
   }

@@ -22,7 +22,10 @@ function Footer() {
           </Nav.Link>
         </Nav.Item>
       </Nav>
-      <p className="text-center bg-body-tertiary">
+      <p
+        className="text-center bg-body-tertiary"
+        style={{ margin: '0', padding: '0' }}
+      >
         Valentyn Genkin HYF Educational project
       </p>
     </>

@@ -8,7 +8,7 @@ function DepartmentsList() {
   const url =
     'https://collectionapi.metmuseum.org/public/collection/v1/departments';
 
-  const [data, error] = useFetch(url);
+  const [data, isLoading, error] = useFetch(url);
 
   useEffect(() => {
     data && setResponse(data);
@@ -16,9 +16,10 @@ function DepartmentsList() {
 
   return (
     <Container className="category-container">
-      {error ? (
-        <p>{error.toString()}</p>
-      ) : response ? (
+      {isLoading ? (
+        <Spinner variant="primary" />
+      ) : (
+        response &&
         response.departments.map((department) => (
           <div key={department.departmentId} className="category-item">
             <Link to={`${department.displayName}/${department.departmentId}`}>
@@ -26,8 +27,6 @@ function DepartmentsList() {
             </Link>
           </div>
         ))
-      ) : (
-        <Spinner />
       )}
     </Container>
   );
