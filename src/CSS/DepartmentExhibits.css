@@ -39,9 +39,18 @@
 .items-per-page {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
 }
 
 .items-per-page span {
   font-weight: 500;
   margin-right: 5px;
+}
+
+.department-container-card-body {
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }

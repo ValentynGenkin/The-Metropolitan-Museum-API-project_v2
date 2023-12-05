@@ -13,7 +13,7 @@ function DepartmentExhibits() {
   const [exhibitId, setExhibitId] = useState([]);
   const [chunkSelect, setChunkSelect] = useState(20);
 
-  const { id } = useParams();
+  const { id, category } = useParams();
 
   const url = `https://collectionapi.metmuseum.org/public/collection/v1/search?departmentId=${id}&q=cat`;
   const [data, error] = useFetch(url);
@@ -50,33 +50,32 @@ function DepartmentExhibits() {
   return (
     <>
       <Container className="items-per-page">
-        <span>{'Items per page: '}</span>
-        <div>
-          <Form.Select
-            aria-label="Items on page"
-            size="sm"
-            onChange={(e) => {
-              setChunkSelect(parseInt(e.target.value));
-            }}
-          >
-            <option>20</option>
-            <option value="8">8</option>
-            <option value="12">12</option>
-            <option value="16">16</option>
-            <option value="20">20</option>
-          </Form.Select>
+        <h4>{category}</h4>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <span>{'Items per page: '}</span>
+          <div>
+            <Form.Select
+              aria-label="Items on page"
+              size="sm"
+              onChange={(e) => {
+                setChunkSelect(parseInt(e.target.value));
+              }}
+            >
+              <option>20</option>
+              <option value="8">8</option>
+              <option value="12">12</option>
+              <option value="16">16</option>
+              <option value="20">20</option>
+              <option value="40">40</option>
+            </Form.Select>
+          </div>
+
+          <span style={{ marginLeft: '10px' }}>
+            {response && `Total exhibits: ${response.length}`}{' '}
+          </span>
         </div>
       </Container>
       <Container className="page-nav-btn-container">
-        <Button
-          className="page-nav-btn"
-          variant="outline-dark"
-          onClick={() => {
-            upOffset();
-          }}
-        >
-          Next page
-        </Button>
         <Button
           className="page-nav-btn"
           variant="outline-dark"
@@ -85,6 +84,15 @@ function DepartmentExhibits() {
           }}
         >
           Previous page
+        </Button>
+        <Button
+          className="page-nav-btn"
+          variant="outline-dark"
+          onClick={() => {
+            upOffset();
+          }}
+        >
+          Next page
         </Button>
       </Container>
       <p className="copyright-msg">
@@ -104,7 +112,7 @@ function DepartmentExhibits() {
                 }
                 className="department-container-img"
               />
-              <Card.Body>
+              <Card.Body className="department-container-card-body">
                 <Card.Title className="department-container-title">
                   {item.title}
                 </Card.Title>
@@ -113,7 +121,7 @@ function DepartmentExhibits() {
                   <br />
                   {item.objectDate}
                 </Card.Text>
-                <Button variant="primary">Go somewhere</Button>
+                <Button variant="outline-secondary">More information</Button>
               </Card.Body>
             </Card>
           ))}
