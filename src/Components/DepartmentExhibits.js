@@ -3,6 +3,7 @@ import useFetch from '../Hooks/useFetch';
 import { useParams } from 'react-router-dom';
 import { bulkFetch } from '../Functions/bulkFetch';
 import { Button, Card, Container, Form, Spinner } from 'react-bootstrap';
+import PopUp from './PopUp';
 
 import '../CSS/DepartmentExhibits.css';
 
@@ -14,11 +15,16 @@ function DepartmentExhibits() {
   const [chunkSelect, setChunkSelect] = useState(20);
   const [currentPage, setCurrentPage] = useState(1);
   const [bulkLoading, setBulkLoading] = useState(true);
+  const [filter, setFilter] = useState({ onDisplay: false, highlights: false });
+  const [modalShow, setModalShow] = useState(false);
+  const [popUpBody, setPopUpBody] = useState(<></>);
   const { id, category } = useParams();
 
   const url =
     category === 'search'
-      ? `https://collectionapi.metmuseum.org/public/collection/v1/search?q=${id}`
+      ? `https://collectionapi.metmuseum.org/public/collection/v1/search?${
+          filter.onDisplay ? 'isOnView=true&' : ''
+        }${filter.highlights ? 'isHighlight=true&' : ''}q=${id}`
       : `https://collectionapi.metmuseum.org/public/collection/v1/search?departmentId=${id}&q=cat`;
 
   const [data, isLoading, error] = useFetch(url);
@@ -54,6 +60,11 @@ function DepartmentExhibits() {
 
   return (
     <>
+      <PopUp
+        show={modalShow}
+        exhibit={popUpBody}
+        onHide={() => setModalShow(false)}
+      />
       <Container className="items-per-page">
         <h4>
           {category === 'search' ? `Search results for: ${id}` : category}
@@ -84,21 +95,29 @@ function DepartmentExhibits() {
         </div>
       </Container>
       <Container>
-        <Form className="check-boxes">
-          <p>Filters:</p>
-          <Form.Check
-            className="filter-switch"
-            type="switch"
-            id="custom-switch-1"
-            label="Artworks on Display"
-          />
-          <Form.Check
-            className="filter-switch"
-            type="switch"
-            label="Highlights"
-            id="custom-switch-2"
-          />
-        </Form>
+        {category === 'search' && (
+          <Form className="check-boxes">
+            <p>Filters:</p>
+            <Form.Check
+              className="filter-switch"
+              type="switch"
+              id="custom-switch-1"
+              label="Artworks on Display"
+              onChange={(e) => {
+                setFilter({ ...filter, onDisplay: e.target.checked });
+              }}
+            />
+            <Form.Check
+              className="filter-switch"
+              type="switch"
+              label="Highlights"
+              id="custom-switch-2"
+              onChange={(e) => {
+                setFilter({ ...filter, highlights: e.target.checked });
+              }}
+            />
+          </Form>
+        )}
       </Container>
       <Container className="page-nav-btn-container">
         <Button
@@ -157,7 +176,15 @@ function DepartmentExhibits() {
                     <br />
                     {item.objectDate}
                   </Card.Text>
-                  <Button variant="outline-secondary">More information</Button>
+                  <Button
+                    variant="outline-secondary"
+                    onClick={() => {
+                      setPopUpBody(item);
+                      setModalShow(true);
+                    }}
+                  >
+                    More information
+                  </Button>
                 </Card.Body>
               </Card>
             ))}
