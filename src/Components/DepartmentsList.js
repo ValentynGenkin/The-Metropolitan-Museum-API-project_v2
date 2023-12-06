@@ -15,9 +15,16 @@ function DepartmentsList() {
   }, [data]);
 
   return (
-    <Container className="category-container">
+    <Container
+      className="layout-container"
+      style={{ padding: '0', minHeight: 'calc(100vh - 120px)' }}
+    >
       {isLoading ? (
-        <Spinner variant="primary" />
+        <Spinner
+          variant="primary"
+          className="spinner"
+          style={{ position: 'absolute', top: '50%', left: '50%' }}
+        />
       ) : (
         response &&
         response.departments.map((department) => (

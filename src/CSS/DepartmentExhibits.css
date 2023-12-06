@@ -70,3 +70,15 @@
   font-size: 16px;
   font-weight: 600;
 }
+
+.zoom-btn-div {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 10px;
+}
+
+.zoom-img {
+  width: 25px;
+  height: 25px;
+}

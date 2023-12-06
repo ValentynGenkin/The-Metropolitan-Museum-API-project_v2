@@ -59,7 +59,10 @@ function DepartmentExhibits() {
   };
 
   return (
-    <>
+    <Container
+      className="layout-container"
+      style={{ padding: '0', minHeight: 'calc(100vh - 120px)' }}
+    >
       <PopUp
         show={modalShow}
         exhibit={popUpBody}
@@ -152,9 +155,13 @@ function DepartmentExhibits() {
         displayed.
       </p>
       {isLoading || bulkLoading ? (
-        <Spinner variant="primary" />
+        <Spinner
+          variant="primary"
+          className="spinner"
+          style={{ position: 'absolute', top: '50%', left: '50%' }}
+        />
       ) : (
-        <Container className="department-container">
+        <Container className="department-container" style={{ height: '100%' }}>
           {fetchedData &&
             fetchedData.map((item) => (
               <Card key={item.objectID} className="department-container-card">
@@ -172,25 +179,53 @@ function DepartmentExhibits() {
                     {item.title}
                   </Card.Title>
                   <Card.Text className="department-container-text">
-                    {item.artistDisplayName}
-                    <br />
-                    {item.objectDate}
+                    {item.artistDisplayName && (
+                      <>
+                        <span>{`Artist: ${item.artistDisplayName}`}</span>
+                        <br />
+                      </>
+                    )}
+                    {item.objectDate && (
+                      <>
+                        <span>{`Date: ${item.objectDate}`}</span> <br />
+                      </>
+                    )}
+                    {item.culture && (
+                      <>
+                        <span>{`Culture: ${item.culture}`}</span> <br />
+                      </>
+                    )}
+                    {item.classification && (
+                      <>
+                        <span>{`Classification ${item.classification}`}</span>
+                        <br />
+                      </>
+                    )}
                   </Card.Text>
-                  <Button
-                    variant="outline-secondary"
-                    onClick={() => {
-                      setPopUpBody(item);
-                      setModalShow(true);
-                    }}
-                  >
-                    More information
-                  </Button>
+                  <div className="zoom-btn-div">
+                    {item.primaryImageSmall && (
+                      <Button
+                        className="zoom-btn"
+                        variant="light"
+                        onClick={() => {
+                          setPopUpBody(item);
+                          setModalShow(true);
+                        }}
+                      >
+                        <img
+                          src="/assets/zoom.png"
+                          alt="zoom"
+                          className="zoom-img"
+                        />
+                      </Button>
+                    )}
+                  </div>
                 </Card.Body>
               </Card>
             ))}
         </Container>
       )}
-    </>
+    </Container>
   );
 }
 
