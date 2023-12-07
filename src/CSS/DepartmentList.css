@@ -1,0 +1,53 @@
+.spinner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+
+.layout-container {
+  padding: 0;
+  min-height: calc(100vh - 120px);
+}
+
+.category-item a {
+  text-decoration: none;
+  color: black;
+  font-weight: 600;
+}
+
+.category-item div {
+  min-width: 150px;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 85px;
+  border: 1px solid lightgrey;
+
+  display: flex;
+  background-color: rgba(211, 211, 211, 0.236);
+
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.departments-list-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 35px;
+  padding-top: 25px;
+}
+
+.link-text {
+  padding: 10px;
+}
+
+.category-item {
+  border-radius: 8px;
+  overflow: hidden;
+  flex-grow: 1;
+}
+
+.category-item:hover {
+  box-shadow: 0 0 8px 1px lightgrey;
+}

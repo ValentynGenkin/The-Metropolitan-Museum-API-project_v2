@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import useFetch from '../Hooks/useFetch';
-import { Container, Spinner } from 'react-bootstrap';
+import { Button, Container, Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import '../CSS/DepartmentList.css';
 
 function DepartmentsList() {
   const [response, setResponse] = useState(null);
@@ -15,26 +16,25 @@ function DepartmentsList() {
   }, [data]);
 
   return (
-    <Container
-      className="layout-container"
-      style={{ padding: '0', minHeight: 'calc(100vh - 120px)' }}
-    >
-      {isLoading ? (
-        <Spinner
-          variant="primary"
-          className="spinner"
-          style={{ position: 'absolute', top: '50%', left: '50%' }}
-        />
-      ) : (
-        response &&
-        response.departments.map((department) => (
-          <div key={department.departmentId} className="category-item">
-            <Link to={`${department.displayName}/${department.departmentId}`}>
-              {department.displayName}
-            </Link>
-          </div>
-        ))
-      )}
+    <Container className="layout-container">
+      <div style={{ margin: '0 auto' }}>
+        <Container className="departments-list-container">
+          {isLoading ? (
+            <Spinner variant="primary" className="spinner" />
+          ) : (
+            response &&
+            response.departments.map((department) => (
+              <span className="category-item " key={department.departmentId}>
+                <Link
+                  to={`${department.displayName}/${department.departmentId}`}
+                >
+                  <div className="link-text">{department.displayName}</div>
+                </Link>
+              </span>
+            ))
+          )}
+        </Container>
+      </div>
     </Container>
   );
 }

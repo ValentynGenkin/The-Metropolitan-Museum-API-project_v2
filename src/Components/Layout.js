@@ -13,7 +13,9 @@ function Layout() {
       <ScrollToTop
         className="scroll-btn"
         smooth
-        component={<img src="" alt="" />}
+        component={
+          <p style={{ margin: '0', padding: '0', fontWeight: 'bold' }}>Up</p>
+        }
       />
 
       <Footer />

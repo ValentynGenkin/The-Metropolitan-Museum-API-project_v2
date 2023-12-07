@@ -1,24 +1,13 @@
 import Nav from 'react-bootstrap/Nav';
+import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
     <>
-      <Nav
-        className="justify-content-center bg-body-tertiary"
-        activeKey="/home"
-      >
+      <Nav className="justify-content-center bg-body-tertiary">
         <Nav.Item>
-          <Nav.Link href="/home">Active</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link eventKey="link-1">Link</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link eventKey="link-2">Link</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link eventKey="disabled" disabled>
-            Disabled
+          <Nav.Link as={Link} to={'/'}>
+            Home
           </Nav.Link>
         </Nav.Item>
       </Nav>
