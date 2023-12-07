@@ -17,14 +17,14 @@
 
 .category-item div {
   min-width: 150px;
-  border-radius: 8px;
-  overflow: hidden;
+
   height: 85px;
   border: 1px solid lightgrey;
 
   display: flex;
   background-color: rgba(211, 211, 211, 0.236);
-
+  border-radius: 8px;
+  overflow: hidden;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;

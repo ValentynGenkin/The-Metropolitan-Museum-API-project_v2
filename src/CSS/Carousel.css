@@ -1,0 +1,23 @@
+.item {
+  overflow: hidden;
+  height: 25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 5px;
+}
+
+.carousel-img {
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+.carousel-link {
+  text-decoration: none;
+  position: absolute;
+  bottom: 30px;
+  color: white;
+  font-weight: bold;
+  font-size: 1.25rem;
+}

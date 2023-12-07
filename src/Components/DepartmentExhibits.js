@@ -59,67 +59,178 @@ function DepartmentExhibits() {
   };
 
   return (
-    <Container
-      className="layout-container"
-      style={{ padding: '0', minHeight: 'calc(100vh - 120px)' }}
-    >
-      <PopUp
-        show={modalShow}
-        exhibit={popUpBody}
-        onHide={() => setModalShow(false)}
-      />
-      <Container className="items-per-page">
-        <h4>
-          {category === 'search' ? `Search results for: ${id}` : category}
-        </h4>
+    <>
+      <Container
+        className="layout-container"
+        style={{
+          padding: '0',
+          minHeight: 'calc(100vh - 188px)',
+        }}
+      >
+        <PopUp
+          show={modalShow}
+          exhibit={popUpBody}
+          onHide={() => setModalShow(false)}
+        />
+        <Container className="items-per-page">
+          <h4>
+            {category === 'search' ? `Search results for: ${id}` : category}
+          </h4>
 
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <span>{'Items per page: '}</span>
-          <div>
-            <Form.Select
-              aria-label="Items on page"
-              size="sm"
-              onChange={(e) => {
-                setChunkSelect(parseInt(e.target.value));
-              }}
-            >
-              <option>20</option>
-              <option value="8">8</option>
-              <option value="12">12</option>
-              <option value="16">16</option>
-              <option value="20">20</option>
-              <option value="40">40</option>
-            </Form.Select>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <span>{'Items per page: '}</span>
+            <div>
+              <Form.Select
+                aria-label="Items on page"
+                size="sm"
+                onChange={(e) => {
+                  setChunkSelect(parseInt(e.target.value));
+                }}
+              >
+                <option>20</option>
+                <option value="8">8</option>
+                <option value="12">12</option>
+                <option value="16">16</option>
+                <option value="20">20</option>
+                <option value="40">40</option>
+              </Form.Select>
+            </div>
+
+            <span style={{ marginLeft: '10px' }}>
+              {response && `Total exhibits: ${response.length}`}{' '}
+            </span>
           </div>
-
-          <span style={{ marginLeft: '10px' }}>
-            {response && `Total exhibits: ${response.length}`}{' '}
-          </span>
-        </div>
-      </Container>
-      <Container>
-        {category === 'search' && (
-          <Form className="check-boxes">
-            <p>Filters:</p>
-            <Form.Check
-              className="filter-switch"
-              type="switch"
-              id="custom-switch-1"
-              label="Artworks on Display"
-              onChange={(e) => {
-                setFilter({ ...filter, onDisplay: e.target.checked });
-              }}
-            />
-            <Form.Check
-              className="filter-switch"
-              type="switch"
-              label="Highlights"
-              id="custom-switch-2"
-              onChange={(e) => {
-                setFilter({ ...filter, highlights: e.target.checked });
-              }}
-            />
-          </Form>
+        </Container>
+        <Container>
+          {category === 'search' && (
+            <Form className="check-boxes">
+              <p>Filters:</p>
+              <Form.Check
+                className="filter-switch"
+                type="switch"
+                id="custom-switch-1"
+                label="Artworks on Display"
+                onChange={(e) => {
+                  setFilter({ ...filter, onDisplay: e.target.checked });
+                }}
+              />
+              <Form.Check
+                className="filter-switch"
+                type="switch"
+                label="Highlights"
+                id="custom-switch-2"
+                onChange={(e) => {
+                  setFilter({ ...filter, highlights: e.target.checked });
+                }}
+              />
+            </Form>
+          )}
+        </Container>
+        <Container className="page-nav-btn-container">
+          <Button
+            className="page-nav-btn"
+            variant="outline-dark"
+            onClick={() => {
+              downOffset();
+              if (currentPage > 1) setCurrentPage(currentPage - 1);
+            }}
+          >
+            Previous page
+          </Button>
+          {response && response.length > 1 ? (
+            <div>
+              {`${currentPage} / ${Math.ceil(response.length / chunkSize)}`}
+            </div>
+          ) : null}
+          <Button
+            className="page-nav-btn"
+            variant="outline-dark"
+            onClick={() => {
+              upOffset();
+              if (response && currentPage < response.length / chunkSize)
+                setCurrentPage(currentPage + 1);
+            }}
+          >
+            Next page
+          </Button>
+        </Container>
+        <p className="copyright-msg">
+          Please note that due to copyright restrictions, not all images may be
+          displayed.
+        </p>
+        {isLoading || bulkLoading ? (
+          <Spinner
+            variant="primary"
+            className="spinner"
+            style={{ position: 'absolute', top: '50%', left: '50%' }}
+          />
+        ) : (
+          <Container
+            className="department-container"
+            style={{ height: '100%' }}
+          >
+            {fetchedData &&
+              fetchedData.map((item) => (
+                <Card key={item.objectID} className="department-container-card">
+                  <Card.Img
+                    variant="top"
+                    src={
+                      item.primaryImageSmall
+                        ? item.primaryImageSmall
+                        : '/assets/noPhoto.png'
+                    }
+                    className="department-container-img"
+                  />
+                  <Card.Body className="department-container-card-body">
+                    <Card.Title className="department-container-title">
+                      {item.title}
+                    </Card.Title>
+                    <Card.Text className="department-container-text">
+                      {item.artistDisplayName && (
+                        <>
+                          <span>{`Artist: ${item.artistDisplayName}`}</span>
+                          <br />
+                        </>
+                      )}
+                      {item.objectDate && (
+                        <>
+                          <span>{`Date: ${item.objectDate}`}</span> <br />
+                        </>
+                      )}
+                      {item.culture && (
+                        <>
+                          <span>{`Culture: ${item.culture}`}</span> <br />
+                        </>
+                      )}
+                      {item.classification && (
+                        <>
+                          <span>{`Classification ${item.classification}`}</span>
+                          <br />
+                        </>
+                      )}
+                    </Card.Text>
+                    <div className="zoom-btn-div">
+                      {item.primaryImageSmall && (
+                        <Button
+                          className="zoom-btn"
+                          variant="light"
+                          onClick={() => {
+                            setPopUpBody(item);
+                            setModalShow(true);
+                          }}
+                        >
+                          <img
+                            src="/assets/zoom.png"
+                            alt="zoom"
+                            className="zoom-img"
+                          />
+                        </Button>
+                      )}
+                    </div>
+                  </Card.Body>
+                </Card>
+              ))}
+          </Container>
         )}
       </Container>
       <Container className="page-nav-btn-container">
@@ -150,82 +261,7 @@ function DepartmentExhibits() {
           Next page
         </Button>
       </Container>
-      <p className="copyright-msg">
-        Please note that due to copyright restrictions, not all images may be
-        displayed.
-      </p>
-      {isLoading || bulkLoading ? (
-        <Spinner
-          variant="primary"
-          className="spinner"
-          style={{ position: 'absolute', top: '50%', left: '50%' }}
-        />
-      ) : (
-        <Container className="department-container" style={{ height: '100%' }}>
-          {fetchedData &&
-            fetchedData.map((item) => (
-              <Card key={item.objectID} className="department-container-card">
-                <Card.Img
-                  variant="top"
-                  src={
-                    item.primaryImageSmall
-                      ? item.primaryImageSmall
-                      : '/assets/noPhoto.png'
-                  }
-                  className="department-container-img"
-                />
-                <Card.Body className="department-container-card-body">
-                  <Card.Title className="department-container-title">
-                    {item.title}
-                  </Card.Title>
-                  <Card.Text className="department-container-text">
-                    {item.artistDisplayName && (
-                      <>
-                        <span>{`Artist: ${item.artistDisplayName}`}</span>
-                        <br />
-                      </>
-                    )}
-                    {item.objectDate && (
-                      <>
-                        <span>{`Date: ${item.objectDate}`}</span> <br />
-                      </>
-                    )}
-                    {item.culture && (
-                      <>
-                        <span>{`Culture: ${item.culture}`}</span> <br />
-                      </>
-                    )}
-                    {item.classification && (
-                      <>
-                        <span>{`Classification ${item.classification}`}</span>
-                        <br />
-                      </>
-                    )}
-                  </Card.Text>
-                  <div className="zoom-btn-div">
-                    {item.primaryImageSmall && (
-                      <Button
-                        className="zoom-btn"
-                        variant="light"
-                        onClick={() => {
-                          setPopUpBody(item);
-                          setModalShow(true);
-                        }}
-                      >
-                        <img
-                          src="/assets/zoom.png"
-                          alt="zoom"
-                          className="zoom-img"
-                        />
-                      </Button>
-                    )}
-                  </div>
-                </Card.Body>
-              </Card>
-            ))}
-        </Container>
-      )}
-    </Container>
+    </>
   );
 }
 

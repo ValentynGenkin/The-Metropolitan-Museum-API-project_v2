@@ -2,6 +2,7 @@ import { Container } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import '../CSS/MainScreenCards.css';
+import { Link } from 'react-router-dom';
 
 function MainScreenCards() {
   return (
@@ -20,6 +21,8 @@ function MainScreenCards() {
               </Card.Text>
               <div>
                 <Button
+                  as={Link}
+                  to={'/categories/European Paintings/11'}
                   variant="outline-primary"
                   className="main-screen-card-button"
                 >
@@ -52,6 +55,8 @@ function MainScreenCards() {
               </Card.Text>
               <div>
                 <Button
+                  as={Link}
+                  to={'/categories/Arms and Armor/4'}
                   variant="outline-primary"
                   className="main-screen-card-button"
                 >
@@ -84,6 +89,8 @@ function MainScreenCards() {
               </Card.Text>
               <div>
                 <Button
+                  as={Link}
+                  to={'/categories/American Decorative Arts/1'}
                   variant="outline-primary"
                   className="main-screen-card-button"
                 >
