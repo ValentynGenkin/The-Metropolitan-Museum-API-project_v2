@@ -6,29 +6,25 @@ The Metropolitan Museum API project app guides the beautiful world of history an
 
 [Demo Link](https://tmm-2v.netlify.app)
 
-## Used technologies:
+### How to Run the Application
+`1 - Clone the repository to your local PC`
 
-Javascript
+`2 - Run in terminal - npm install`
 
-React
-
-React Router
-
-TMM API
-
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm install`
-### `npm start`
+`3 - Run in terminal - npm start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
+
+
+### Used Technology and Frameworks
+
+`React`
+
+`Bootstrap`
 
 
 
