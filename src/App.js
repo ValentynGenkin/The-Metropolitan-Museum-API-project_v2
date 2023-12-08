@@ -1,8 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
-import Layout from './Components/Layout';
 import MainScreenComponent from './Pages/Main/MainScreenComponent';
-import DepartmentsList from './Components/DepartmentsList';
-import DepartmentExhibits from './Components/DepartmentExhibits';
+import DepartmentExhibits from './Pages/Department/DepartmentExhibits';
+import Layout from './Components/Layout';
+import DepartmentsList from './Pages/ArtDepartments/DepartmentsList';
 
 function App() {
   return (

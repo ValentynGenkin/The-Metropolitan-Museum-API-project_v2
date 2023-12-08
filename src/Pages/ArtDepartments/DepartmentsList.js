@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import useFetch from '../Hooks/useFetch';
-import { Button, Container, Spinner } from 'react-bootstrap';
+import useFetch from '../../Hooks/useFetch';
+import { Container, Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import '../CSS/DepartmentList.css';
+import '../../CSS/DepartmentList.css';
 
 function DepartmentsList() {
   const [response, setResponse] = useState(null);
@@ -19,6 +19,7 @@ function DepartmentsList() {
     <Container className="layout-container">
       <div style={{ margin: '0 auto' }}>
         <Container className="departments-list-container">
+          {error && <p>{error.toString()}</p>}
           {isLoading ? (
             <Spinner variant="primary" className="spinner" />
           ) : (

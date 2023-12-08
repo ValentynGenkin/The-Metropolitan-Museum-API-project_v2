@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import useFetch from '../Hooks/useFetch';
+import useFetch from '../../Hooks/useFetch';
 import { useParams } from 'react-router-dom';
-import { bulkFetch } from '../Functions/bulkFetch';
+import { bulkFetch } from '../../Functions/bulkFetch';
 import { Button, Card, Container, Form, Spinner } from 'react-bootstrap';
-import PopUp from './PopUp';
+import PopUp from '../../Components/PopUp';
 
-import '../CSS/DepartmentExhibits.css';
+import '../../CSS/DepartmentExhibits.css';
 
 function DepartmentExhibits() {
   const [response, setResponse] = useState(null);
@@ -169,6 +169,7 @@ function DepartmentExhibits() {
             className="department-container"
             style={{ height: '100%' }}
           >
+            {error && <p>{error.toString()}</p>}
             {fetchedData &&
               fetchedData.map((item) => (
                 <Card key={item.objectID} className="department-container-card">
