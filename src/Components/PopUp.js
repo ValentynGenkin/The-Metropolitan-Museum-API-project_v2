@@ -12,15 +12,20 @@ function PopUp(props) {
   const { exhibit } = props;
   return (
     <Modal {...props} fullscreen={true}>
-      <Modal.Body style={{ margin: '0 auto' }}>
+      <Modal.Body
+        style={{
+          margin: '0 auto',
+        }}
+      >
         {!isImageLoaded && <Spinner />}
         <img
           src={exhibit.primaryImage}
           alt={exhibit.title}
           style={{
-            height: '100%',
+            height: 'auto',
             width: 'auto',
             maxWidth: '100%',
+            maxHeight: '100%',
             borderRadius: '5px',
             display: isImageLoaded ? 'inline' : 'none',
           }}

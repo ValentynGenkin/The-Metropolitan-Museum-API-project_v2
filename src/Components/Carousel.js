@@ -5,10 +5,10 @@ import '../CSS/Carousel.css';
 import { Link } from 'react-router-dom';
 
 const responsive = {
-  0: { items: 1 },
-  568: { items: 1 },
-  800: { items: 2.5 },
-  1024: { items: 3.5, itemsFit: 'contain' },
+  0: { items: 1, itemsFit: 'contain' },
+  568: { items: 1, itemsFit: 'contain' },
+  900: { items: 2.5, itemsFit: 'contain' },
+  1124: { items: 3.5, itemsFit: 'contain' },
 };
 
 const items = [

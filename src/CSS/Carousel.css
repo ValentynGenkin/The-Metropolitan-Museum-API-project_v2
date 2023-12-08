@@ -4,7 +4,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-left: 5px;
 }
 
 .carousel-img {
@@ -16,8 +15,24 @@
 .carousel-link {
   text-decoration: none;
   position: absolute;
-  bottom: 30px;
+  bottom: 10%;
   color: white;
   font-weight: bold;
   font-size: 1.25rem;
+  padding: 5px;
+  border: 1px solid white;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.205);
+}
+
+@media screen and (max-width: 1250px) {
+  .carousel-link {
+    bottom: 40px;
+  }
+}
+
+@media screen and (max-width: 1125px) {
+  .carousel-link {
+    bottom: 50px;
+  }
 }
